@@ -21,13 +21,18 @@ fetch(requestUrl)
 
 
       //2nd call
-      let requestUrl2 = "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search="+ example[0] + "&limit=5";
-      fetch(requestUrl2)
+      //not very pretty at all, will probably need a new API since wikipedia is not CORS compliant and the proxyURL is messy.
+      //let requestUrl2 = "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search="+ example[0] + "&limit=5";
+      let proxyURL = 'https://cors-anywhere.herokuapp.com/';
+      let requestUrl2 = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=" + example[0] + "&explaintext=1&exsectionformat=wiki&redirects=1";
+
+      fetch(proxyURL + requestUrl2)
+      .then(response => response.json())
       .then(function (response2) {
-        return response2.json();
+        return response2;
       })
       .then(function (data2) {
-        console.log(data2)
+        console.log(data2.query.pages[62671].extract);
       });
 
       //set items on page
