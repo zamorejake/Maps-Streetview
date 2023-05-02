@@ -4,4 +4,36 @@
 
 h1{
 background-color: rgb(215, 180, 74);
+
+border: 45pt;
+height: 45pt;
+display: flex;
+justify-content: center;
+}
+
+input {
+display: flex;
+justify-content: center;
+height: 23pt;
+ width: 445pt;
+
+}
+
+label{
+    font-size: 23pt;
+}
+
+#search {
+
+    font-size: 12pt
+}
+
+#title {
+
+    display: flex;
+justify-content: space-between;
+margin: 10pt;
+padding: 8pt;
+background-color: rgb(215, 180, 74);
+
 }
