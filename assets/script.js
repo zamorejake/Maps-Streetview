@@ -4,33 +4,92 @@ let searchValue = document.getElementById("search");
 let title = document.getElementById("title");
 var states = {
     'Alabama': '01',
-    
 
-}
-
-let nyurl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=test&api-key=6p6VhtV9RUQZuaPRE6AOQWL2K9IwE9Ef'
-//https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&fq=source:("The New York Times")&api-key=6p6VhtV9RUQZuaPRE6AOQWL2K9IwE9Ef
-
-// fetch(nyurl)
-//     .then(function (res) {
-//       return res.json();
-//     })
-//     .then(function (data) {
-//       console.log(data);
-// });
-//api.census.gov/data/2021/acs/acs1/profile?get=group(DP02)&for=us:1&key=8f9405697f148ecb16a65fe8a55ec83e70100be9
-var censusBaseURL = 'http://api.census.gov/data/2021/acs/acs1'
-var censusData = '?get=NAME,B01001_001E'
-var censusAPIKey = '&key=8f9405697f148ecb16a65fe8a55ec83e70100be9'
-var userSearch = '&for=' + 'place' + ':*' + ':&in=state:*'
-//replace connecticut
-var x = 'https://api.census.gov/data/2021/pep/population?get=NAME,POP_2021&for=state:*'
-fetch(censusBaseURL+censusData+userSearch+censusAPIKey)
+//data usa api to test
+/*
+var dataUSAURL = 'https://datausa.io/api/data?drilldowns=Nation&measures=Population'
+fetch(dataUSAURL)
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
-      console.log(data);
+      console.log(data.data[0]);
+});
+*/
+//button to trigger code
+submitButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let question = searchValue.value;
+  let requestUrl =
+    "https://developer.nps.gov/api/v1/parks?limit=1&q=" +
+    question +
+    "&api_key=zcVsmk0xbipvcZpXfFUHrZuNkcfpYUIRiuic2fh1";
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      //console.log(data);
+      for (i = 0; i < data.data.length; i++) {
+        example.push(data.data[i].fullName);
+        localStorage.setItem("12345"[i], example[i]);
+      }
+      //local storage stuff
+
+      //console.log(example[0]);
+      //local storage stuff
+      // localStorage.setItem(example[0], example[0]);
+      //localStorage.getItem()
+
+      //ny times call
+      let nyUrl =
+        "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" +
+        question +
+        "&api-key=6p6VhtV9RUQZuaPRE6AOQWL2K9IwE9Ef";
+
+      fetch(nyUrl)
+        .then(function (response3) {
+          return response3.json();
+        })
+        .then(function (data3) {
+          console.log(data3.response.docs[0].snippet);
+          let container = document.createElement("h4");
+          container.textContent = data3.response.docs[0].snippet;
+          title.appendChild(container);
+        });
+
+      //3rd call
+      for (i = 0; i < example.length; i++) {
+        let requestUrl2 =
+          "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search=" +
+          example[i] +
+          "&limit=5";
+
+        fetch(requestUrl2)
+          .then(function (response2) {
+            return response2.json();
+          })
+          .then(function (data2) {
+            let container = document.createElement("a");
+            container.href = data2[3][0];
+            let lineBreak = document.createElement("br");
+            container.innerText = "Click here for wiki link!";
+            console.log(data2[3][0]);
+            title.appendChild(container);
+            title.appendChild(lineBreak);
+          });
+      }
+      searchValue.value = "";
+      let container = document.createElement("h4");
+      container.setAttribute("id", "page");
+      example.forEach(function (example) {
+        let container = document.createElement("h4");
+        container.textContent = example;
+        title.appendChild(container);
+      });
+      console.log(example.length);
+    });
+>>>>>>> 606c5ba0ab06163345dad6a8c2d98ff3edb49fdb
 });
 
 function  returnState () {
