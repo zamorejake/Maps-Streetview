@@ -12,7 +12,6 @@ submitButton.addEventListener("click", function (e) {
 
 
 function renderNYTArticle (data) {
-  console.log(data)
   var articleHeader = data.response.docs[0].headline.main
   var articleSnippet = data.response.docs[0].snippet
   var articleURL = data.response.docs[0].web_url
