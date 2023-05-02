@@ -7,24 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./assets/style.css"></script>
     <title>Parks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head> 
 
-</head>
 <body>
-<header>
+<header class="title">
     <h1>US National Parks Directory</h1>
+
     <nav>
     </nav>
 </header>
 
 <p>
     <form>
-
       <label for="search">Search:</label>
-      <input type="search" id="search" name="search">
-      <button type="submit" id="submit">Submit</button>
+      <input  class="box" class="textarea" type="search" id="search" name="search" placeholder="City Name" >
+      <button type="submit" id="submit"
+      class="button is-warning"
+      >Submit</button>
     </form>
     </p>
-    <div id="title"></div>
+    <results class= results id="title"> 
+    </results> 
 <script src="./assets/script.js"></script>
 </body>
 </html>
