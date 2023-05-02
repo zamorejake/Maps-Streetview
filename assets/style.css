@@ -29,7 +29,7 @@ label{
 }
 
 #title {
-
+    
     display: flex;
 justify-content: space-between;
 margin: 10pt;
@@ -37,3 +37,7 @@ padding: 8pt;
 background-color: rgb(215, 180, 74);
 
 }
+
+.results {
+    display: none;
+ }
