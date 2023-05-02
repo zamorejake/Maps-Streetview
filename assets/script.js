@@ -6,11 +6,13 @@ let title = document.getElementById("title");
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   var userSearch = searchValue.value;
+  localStorage.setItem('searchInput',JSON.stringify(userSearch))
   fetchAPI(userSearch)
 });
 
 
 function renderNYTArticle (data) {
+  console.log(data)
   var articleHeader = data.response.docs[0].headline.main
   var articleSnippet = data.response.docs[0].snippet
   var articleURL = data.response.docs[0].web_url
@@ -39,7 +41,8 @@ function renderNYTArticle (data) {
   snippetEl.textContent = articleSnippet
   var articleLinkEl = document.createElement('a')
   articleLinkEl.setAttribute('href', articleURL)
-  articleLinkEl.textContent = 'click here to view this New York Times Article'
+  userSearch = JSON.parse(localStorage.getItem('searchInput'))
+  articleLinkEl.textContent = 'View This Recent New York Times Article Related to - '+userSearch.toUpperCase();
   
 
 
