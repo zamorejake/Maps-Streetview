@@ -27,7 +27,6 @@ function fetchAPI (userSearch) {
   fetch(NYTrequest).then(function (res) {
     return res.json();
   }).then(function (data) {
-    console.log(data)
     renderNYTArticle(data)
 
     //wikipedia link
@@ -44,16 +43,22 @@ function renderNYTArticle (data) {
   var articleHeader = data.response.docs[0].headline.main
   var articleSnippet = data.response.docs[0].snippet
   var articleURL = data.response.docs[0].web_url
-  var imgURL = data.response.docs[0].multimedia[0].url
+  console.log(data.response.docs[0].multimedia[0])
+  if (data.response.docs[0].multimedia[0] !== undefined) {
+    var imgURL = data.response.docs[0].multimedia[0].url
+  } 
+  
   
   //
   var articleDivEl = document.createElement('div')
   articleDivEl.setAttribute('style','display: flex; align-items: center;')
   title.appendChild(articleDivEl)
 
-  var imgEl = document.createElement('img')
-  imgEl.setAttribute('src','https://www.nytimes.com/'+imgURL)
-  imgEl.setAttribute('style','width: 300px; height: auto;')
+  if (data.response.docs[0].multimedia[0] !==undefined) {
+    var imgEl = document.createElement('img')
+    imgEl.setAttribute('src','https://www.nytimes.com/'+imgURL)
+    imgEl.setAttribute('style','width: 300px; height: auto;')
+  }
 
   var articleContainerEl = document.createElement('div')
   articleContainerEl.setAttribute('style','display: flex; flex-direction: column; justify-content: space-between; height: 300px; align-items: center')
@@ -67,7 +72,9 @@ function renderNYTArticle (data) {
   
 
 
-  articleDivEl.appendChild(imgEl)
+  if (data.response.docs[0].multimedia[0] !== undefined) {
+    articleDivEl.appendChild(imgEl)
+  } 
   articleDivEl.appendChild(articleContainerEl)
   articleContainerEl.appendChild(headerEl)
   articleContainerEl.appendChild(snippetEl)
@@ -87,6 +94,7 @@ function renderWikiLink (data2) {
   wikiContainerEl.appendChild(wikicontainertextEl)
   wikiContainerEl.appendChild(wikipediaLinkEl)
 }
+
 
 // let requestUrl =
 //     "https://developer.nps.gov/api/v1/parks?limit=1&q=" +
