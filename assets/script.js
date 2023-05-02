@@ -3,20 +3,18 @@ let submitButton = document.getElementById("submit");
 let searchValue = document.getElementById("search");
 let title = document.getElementById("title");
 
-let nyurl =
-  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=yellow&api-key=6p6VhtV9RUQZuaPRE6AOQWL2K9IwE9Ef";
-
-fetch(nyurl)
-  .then(function (response3) {
-    return response3.json();
-  })
-  .then(function (data3) {
-    console.log(data3.response.docs[0].snippet);
-    let container = document.createElement("h4");
-    container.textContent = data3.response.docs[0].snippet;
-    title.appendChild(container);
-  });
-
+//data usa api to test
+/*
+var dataUSAURL = 'https://datausa.io/api/data?drilldowns=Nation&measures=Population'
+fetch(dataUSAURL)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      console.log(data.data[0]);
+});
+*/
+//button to trigger code
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   let question = searchValue.value;
@@ -34,11 +32,31 @@ submitButton.addEventListener("click", function (e) {
         example.push(data.data[i].fullName);
         localStorage.setItem("12345"[i], example[i]);
       }
+      //local storage stuff
+
       //console.log(example[0]);
       //local storage stuff
       // localStorage.setItem(example[0], example[0]);
       //localStorage.getItem()
-      //2nd call
+
+      //ny times call
+      let nyUrl =
+        "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" +
+        question +
+        "&api-key=6p6VhtV9RUQZuaPRE6AOQWL2K9IwE9Ef";
+
+      fetch(nyUrl)
+        .then(function (response3) {
+          return response3.json();
+        })
+        .then(function (data3) {
+          console.log(data3.response.docs[0].snippet);
+          let container = document.createElement("h4");
+          container.textContent = data3.response.docs[0].snippet;
+          title.appendChild(container);
+        });
+
+      //3rd call
       for (i = 0; i < example.length; i++) {
         let requestUrl2 =
           "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search=" +
