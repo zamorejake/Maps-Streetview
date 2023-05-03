@@ -1,16 +1,38 @@
 let example = [];
 let submitButton = document.getElementById("submit");
 let searchValue = document.getElementById("search");
+let historyButton = document.getElementById("viewHistory");
+let historyOutput = document.getElementById("historyOutput");
 let title = document.getElementById("title");
 
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   var userSearch = searchValue.value;
+  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
+  if (historyList) {
+    historyList.push(userSearch);
+    localStorage.setItem("searchInputHistory", JSON.stringify(historyList));
+  } else {
+    let newHistoryList = [];
+    newHistoryList.push(userSearch);
+    localStorage.setItem("searchInputHistory", JSON.stringify(newHistoryList));
+  }
   //Add if statement to check if userSearch is an actual US National Park
   localStorage.setItem('searchInput',JSON.stringify(userSearch))
   fetchAPI(userSearch)
 });
-
+historyButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
+  var history = "Previous Searches: " + historyList;
+  historyOutput.innerText = history;
+  if (historyOutput.style.display === "block") {
+    historyOutput.style.display = "none";
+    console.log("test");
+  } else {
+    historyOutput.innerText = history;
+    historyOutput.style.display = "block";
+  }})
 
 function renderNYTArticle (data) {
   var articleHeader = data.response.docs[0].headline.main
@@ -183,16 +205,17 @@ function fetchAPI (userSearch) {
   clearBtnEl.textContent = 'Clear'
   document.body.appendChild(clearBtnEl)
 
+  clearBtnEl.addEventListener("click", clearField);
   
-  clearBtnEl.addEventListener('click', function () {
-    var wikiContainerEl = document.querySelector('#wiki-container')
-    var articleDivEl = document.querySelector('#article-container')
-    var clearBtnEl = document.querySelector('#clear')
-    var parkContainerEl = document.querySelector('#park-container')
+  function clearField() {
+    var wikiContainerEl = document.querySelector("#wiki-container");
+    var articleDivEl = document.querySelector("#article-container");
+    var clearBtnEl = document.querySelector("#clear");
+    var parkContainerEl = document.querySelector('#park-container');
     wikiContainerEl.remove();
     articleDivEl.remove();
     clearBtnEl.remove();
     parkContainerEl.remove();
-
-  })
+  }
+  
 }
