@@ -1,11 +1,22 @@
 let example = [];
 let submitButton = document.getElementById("submit");
 let searchValue = document.getElementById("search");
+let historyButton = document.getElementById("viewHistory");
+let historyOutput = document.getElementById("historyOutput");
 let title = document.getElementById("title");
 
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   var userSearch = searchValue.value;
+  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
+  if (historyList) {
+    historyList.push(userSearch);
+    localStorage.setItem("searchInputHistory", JSON.stringify(historyList));
+  } else {
+    let newHistoryList = [];
+    newHistoryList.push(userSearch);
+    localStorage.setItem("searchInputHistory", JSON.stringify(newHistoryList));
+  }
   //Add if statement to check if userSearch is an actual US National Park
   localStorage.setItem('searchInput',JSON.stringify(userSearch))
   fetchAPI(userSearch)
@@ -29,7 +40,18 @@ submitButton.addEventListener("click", function (e) {
   
   })
 });
-
+historyButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
+  var history = "Previous Searches: " + historyList;
+  historyOutput.innerText = history;
+  if (historyOutput.style.display === "block") {
+    historyOutput.style.display = "none";
+    console.log("test");
+  } else {
+    historyOutput.innerText = history;
+    historyOutput.style.display = "block";
+  }})
 
 function renderNYTArticle (data) {
   var articleHeader = data.response.docs[0].headline.main
