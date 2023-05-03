@@ -4,6 +4,7 @@ let searchValue = document.getElementById("search");
 let historyButton = document.getElementById("viewHistory");
 let historyOutput = document.getElementById("historyOutput");
 let title = document.getElementById("title");
+var removeHistory = document.querySelector('#remove-history')
 
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
@@ -17,12 +18,14 @@ submitButton.addEventListener("click", function (e) {
     newHistoryList.push(userSearch);
     localStorage.setItem("searchInputHistory", JSON.stringify(newHistoryList));
   }
+
   //Add if statement to check if userSearch is an actual US National Park
   localStorage.setItem('searchInput',JSON.stringify(userSearch))
   fetchAPI(userSearch)
 
   //clear button
   var clearBtnEl = document.createElement('button')
+  clearBtnEl.setAttribute('style','background-color: rgb(24, 19, 163); color: white; margin-left: 2rem; height: 30px; width: 80px; border-radius: 25px;')
   clearBtnEl.setAttribute('id','clear')
   clearBtnEl.textContent = 'Clear'
   document.body.appendChild(clearBtnEl)
@@ -40,6 +43,7 @@ submitButton.addEventListener("click", function (e) {
   
   })
 });
+
 historyButton.addEventListener("click", function (e) {
   e.preventDefault();
   let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
@@ -47,11 +51,18 @@ historyButton.addEventListener("click", function (e) {
   historyOutput.innerText = history;
   if (historyOutput.style.display === "block") {
     historyOutput.style.display = "none";
-    console.log("test");
+    
   } else {
     historyOutput.innerText = history;
     historyOutput.style.display = "block";
-  }})
+  }
+});
+
+
+removeHistory.addEventListener('click', function (e) {
+  e.preventDefault
+  localStorage.removeItem('searchInputHistory')
+})
 
 function renderNYTArticle (data) {
   var articleHeader = data.response.docs[0].headline.main
@@ -133,7 +144,7 @@ function renderParkData (d) {
   parkDivEl.setAttribute('style','display: flex; justify-content: center;')
   var parkContainerEl = document.createElement('div')
   parkContainerEl.setAttribute('id','park')
-  parkContainerEl.setAttribute('style','display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; justify-content: center; width: 80%;')
+  parkContainerEl.setAttribute('style','display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; justify-content: center; width: 80%; margin-top: 100px;')
   
 
   var parkNameEl =  document.createElement('h2')
@@ -149,7 +160,7 @@ function renderParkData (d) {
   parkDescriptionEl.textContent = parkDescription
 
   var contactEl = document.createElement('div')
-  contactEl.setAttribute('style','display: flex; flex-direction: column; margin: 5px;')
+  contactEl.setAttribute('style','display: flex; flex-direction: column; margin-top: 50px; margin-bottom: 100px;')
   
   var contactHeaderEl = document.createElement('h3')
   contactHeaderEl.setAttribute('style','font-size: 16px;')
