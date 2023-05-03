@@ -1,7 +1,6 @@
 let example = [];
 let submitButton = document.getElementById("submit");
 let searchValue = document.getElementById("search");
-let historyButton = document.getElementById("viewHistory");
 let historyOutput = document.getElementById("historyOutput");
 let title = document.getElementById("title");
 var removeHistory = document.querySelector('#remove-history')
@@ -9,18 +8,7 @@ var removeHistory = document.querySelector('#remove-history')
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   var userSearch = searchValue.value;
-  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
-  if (historyList) {
-    historyList.push(userSearch);
-    localStorage.setItem("searchInputHistory", JSON.stringify(historyList));
-  } else {
-    let newHistoryList = [];
-    newHistoryList.push(userSearch);
-    localStorage.setItem("searchInputHistory", JSON.stringify(newHistoryList));
-  }
-
-  //Add if statement to check if userSearch is an actual US National Park
-  localStorage.setItem('searchInput',JSON.stringify(userSearch))
+  createSearchHistory(userSearch)
   fetchAPI(userSearch)
 
   //clear button
@@ -44,24 +32,10 @@ submitButton.addEventListener("click", function (e) {
   })
 });
 
-historyButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  let historyList = JSON.parse(localStorage.getItem("searchInputHistory"));
-  var history = "Previous Searches: " + historyList;
-  historyOutput.innerText = history;
-  if (historyOutput.style.display === "block") {
-    historyOutput.style.display = "none";
-    
-  } else {
-    historyOutput.innerText = history;
-    historyOutput.style.display = "block";
-  }
-});
-
-
 removeHistory.addEventListener('click', function (e) {
-  e.preventDefault
-  localStorage.removeItem('searchInputHistory')
+  e.preventDefault();
+  var userSearchDivEl = document.querySelector('#search-history-div');
+  userSearchDivEl.remove();
 })
 
 function renderNYTArticle (data) {
@@ -192,16 +166,6 @@ function renderParkData (d) {
   contactEl.appendChild(emailEl)
   contactEl.appendChild(parkNumberEl)
   contactEl.appendChild(parkAddressEl)
-
-
-  console.log(parkName)
-  console.log(parkDescription)
-  console.log(parkIMG)
-  console.log(parkDirections)
-  console.log(parkAddress)
-  console.log(parkEmail )
-  console.log(parkEmailDescription)
-  console.log(parkNumber)
 }
 
 function fetchAPI (userSearch) {
@@ -227,4 +191,31 @@ function fetchAPI (userSearch) {
       renderParkData(d)
     })
   })
+}
+
+function createSearchHistory (userSearch) {
+  var parseVar = userSearch.split(' ')
+  userSearchUse = parseVar.join('-')
+  userSearchUse = userSearchUse.toLowerCase()
+  var userSearchDivEl = document.querySelector('#search-history-div')
+
+  if (!document.querySelector('#search-history-div')) {
+    console.log('true')
+    var userSearchDivEl = document.createElement('div')
+    userSearchDivEl.setAttribute('id','search-history-div')
+    userSearchDivEl.setAttribute('style','display: flex')
+  } else {console.log('false')}
+
+  
+  var userSearchEl = document.createElement('div')
+  userSearchEl.setAttribute('style','background-color:#48c78e; color: white; margin-left: 2rem; height: 30px; width: auto; border-radius: 4px; padding-left: 10px; padding-right: 10px; margin-top: 20px;')
+  userSearchEl.textContent = userSearch
+  if (!document.querySelector('#search-history-div')) {
+    historyOutput.appendChild(userSearchDivEl)
+  }
+  userSearchDivEl.appendChild(userSearchEl)
+  
+}
+
+function renderSearchHistory () {
 }
