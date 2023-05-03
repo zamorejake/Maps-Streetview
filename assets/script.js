@@ -9,6 +9,25 @@ submitButton.addEventListener("click", function (e) {
   //Add if statement to check if userSearch is an actual US National Park
   localStorage.setItem('searchInput',JSON.stringify(userSearch))
   fetchAPI(userSearch)
+
+  //clear button
+  var clearBtnEl = document.createElement('button')
+  clearBtnEl.setAttribute('id','clear')
+  clearBtnEl.textContent = 'Clear'
+  document.body.appendChild(clearBtnEl)
+  
+    
+  clearBtnEl.addEventListener('click', function () {
+    var wikiContainerEl = document.querySelector('#wiki-container')
+    var articleDivEl = document.querySelector('#article-container')
+    var clearBtnEl = document.querySelector('#clear')
+    var parkEl = document.getElementById('park')
+    wikiContainerEl.remove();
+    articleDivEl.remove();
+    clearBtnEl.remove();
+    parkEl.remove();
+  
+  })
 });
 
 
@@ -91,7 +110,7 @@ function renderParkData (d) {
   var parkDivEl = document.createElement('div')
   parkDivEl.setAttribute('style','display: flex; justify-content: center;')
   var parkContainerEl = document.createElement('div')
-  parkContainerEl.setAttribute('id','park-container')
+  parkContainerEl.setAttribute('id','park')
   parkContainerEl.setAttribute('style','display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; justify-content: center; width: 80%;')
   
 
@@ -174,25 +193,5 @@ function fetchAPI (userSearch) {
     }).then(function(d) {
       renderParkData(d)
     })
-  })
-
-
-  //clear button
-  var clearBtnEl = document.createElement('button')
-  clearBtnEl.setAttribute('id','submit')
-  clearBtnEl.textContent = 'Clear'
-  document.body.appendChild(clearBtnEl)
-
-  
-  clearBtnEl.addEventListener('click', function () {
-    var wikiContainerEl = document.querySelector('#wiki-container')
-    var articleDivEl = document.querySelector('#article-container')
-    var clearBtnEl = document.querySelector('#clear')
-    var parkContainerEl = document.querySelector('#park-container')
-    wikiContainerEl.remove();
-    articleDivEl.remove();
-    clearBtnEl.remove();
-    parkContainerEl.remove();
-
   })
 }
