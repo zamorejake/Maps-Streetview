@@ -20,37 +20,42 @@ function renderNYTArticle (data) {
     var imgURL = data.response.docs[0].multimedia[0].url
   } 
   
-  
+  var title = document.querySelector('#title')
+  title.setAttribute('style','justify-content: center')
   //
   var articleDivEl = document.createElement('div')
-  articleDivEl.setAttribute('style','display: flex; align-items: center;')
+  articleDivEl.setAttribute('style','display: flex; align-items: center; width: 50%;')
   articleDivEl.setAttribute('id','article-container')
   title.appendChild(articleDivEl)
 
   if (data.response.docs[0].multimedia[0] !==undefined) {
     var imgEl = document.createElement('img')
     imgEl.setAttribute('src','https://www.nytimes.com/'+imgURL)
-    imgEl.setAttribute('style','width: 300px; height: auto;')
+    imgEl.setAttribute('style','width: 100px; height: auto;')
   }
 
   var articleContainerEl = document.createElement('div')
-  articleContainerEl.setAttribute('style','display: flex; flex-direction: column; justify-content: space-between; height: 300px; align-items: center')
+  articleContainerEl.setAttribute('style','display: flex; flex-direction: column; height: auto; align-items: center;')
   var headerEl = document.createElement('h4')
+  headerEl.setAttribute('style','font-size: 14px;')
   headerEl.textContent = articleHeader
   var snippetEl = document.createElement('p')
+  snippetEl.setAttribute('style','font-size: 12px;')
   snippetEl.textContent = articleSnippet
   var articleLinkEl = document.createElement('a')
   articleLinkEl.setAttribute('href', articleURL)
+  articleLinkEl.setAttribute('style','font-size: 12px;')
   userSearch = JSON.parse(localStorage.getItem('searchInput'))
   articleLinkEl.textContent = 'View This Recent New York Times Article Related to - '+userSearch.toUpperCase();
   
 
 
-  if (data.response.docs[0].multimedia[0] !== undefined) {
-    articleDivEl.appendChild(imgEl)
-  } 
+  
   articleDivEl.appendChild(articleContainerEl)
   articleContainerEl.appendChild(headerEl)
+  if (data.response.docs[0].multimedia[0] !== undefined) {
+    articleContainerEl.appendChild(imgEl)
+  } 
   articleContainerEl.appendChild(snippetEl)
   articleContainerEl.appendChild(articleLinkEl)
 }
@@ -61,8 +66,10 @@ function renderWikiLink (data2) {
   wikiContainerEl.setAttribute('style', 'display: flex; flex-direction: column;')
   wikiContainerEl.setAttribute('id', 'wiki-container')
   var wikicontainertextEl = document.createElement('h2')
+  wikicontainertextEl.setAttribute('style','font-size: 14px;')
   wikicontainertextEl.textContent = 'Wikipedia:'
   var wikipediaLinkEl = document.createElement('a')
+  wikipediaLinkEl.setAttribute('style','font-size: 12px;')
   wikipediaLinkEl.setAttribute('href', wikipediaURL)
   wikipediaLinkEl.textContent = 'Interested in more information?'
   title.appendChild(wikiContainerEl)
@@ -84,11 +91,11 @@ function renderParkData (d) {
   var parkDivEl = document.createElement('div')
   parkDivEl.setAttribute('style','display: flex; justify-content: center;')
   var parkContainerEl = document.createElement('div')
-  parkContainerEl.setAttribute('style','display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%;')
+  parkContainerEl.setAttribute('style','display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; justify-content: center; width: 80%;')
   
 
   var parkNameEl =  document.createElement('h2')
-  parkNameEl.setAttribute('style','font-size: 25px')
+  parkNameEl.setAttribute('style','font-size: 32px')
   parkNameEl.textContent = parkName
   
   var parkIMGEl = document.createElement('img')
@@ -96,27 +103,28 @@ function renderParkData (d) {
   parkIMGEl.setAttribute('style','width: 250px; height: 250px;')
   
   parkDescriptionEl = document.createElement('p')
+  parkDescriptionEl.setAttribute('style','font-size: 25px; margin: 15px;')
   parkDescriptionEl.textContent = parkDescription
 
   var contactEl = document.createElement('div')
   contactEl.setAttribute('style','display: flex; flex-direction: column; margin: 5px;')
   
   var contactHeaderEl = document.createElement('h3')
-  contactHeaderEl.setAttribute('style','font-size: 10px;')
+  contactHeaderEl.setAttribute('style','font-size: 16px;')
   contactHeaderEl.textContent = 'Come visit '+parkName+':'
 
   var emailEl = document.createElement('a')
   emailEl.textContent = parkEmailDescription
-  emailEl.setAttribute('style','font-size: 10px;')
+  emailEl.setAttribute('style','font-size: 16px;')
   emailEl.setAttribute('href','mailto:'+parkEmail)
 
   var parkNumberEl = document.createElement('p')
-  parkNumberEl.setAttribute('style','font-size: 10px;')
+  parkNumberEl.setAttribute('style','font-size: 16px;')
   parkNumberEl.textContent = 'Phone number: '+parkNumber
 
   var parkAddressEl = document.createElement('a')
   parkAddressEl.setAttribute('href', parkDirections)
-  parkAddressEl.setAttribute('style','font-size: 10px;')
+  parkAddressEl.setAttribute('style','font-size: 16px;')
   parkAddressEl.textContent = 'Directions to '+ parkName.toUpperCase()
 
 
@@ -170,8 +178,7 @@ function fetchAPI (userSearch) {
 
   //clear button
   var clearBtnEl = document.createElement('button')
-  clearBtnEl.setAttribute('class','button')
-  clearBtnEl.setAttribute('id','clear')
+  clearBtnEl.setAttribute('id','submit')
   clearBtnEl.textContent = 'Clear'
   document.body.appendChild(clearBtnEl)
 

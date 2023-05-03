@@ -31,9 +31,17 @@ color: black;
 margin-left: 2rem;
 }
 
-#submit,.button{
+#submit {
     background-color: rgb(24, 19, 163);
     color:white;
+    margin-left: 2rem;
+    height:30px;
+    width: 80px;
+    border-radius: 25px;
+}
+#submit:hover {
+    background-color: rgb(220, 41, 1);
+    color:rgb(24, 19, 163);
     margin-left: 2rem;
     height:30px;
     width: 80px;
@@ -49,7 +57,7 @@ padding: 8pt;
 }
 
 .results {
-display: none;
+    display: none;
 }
 
 
