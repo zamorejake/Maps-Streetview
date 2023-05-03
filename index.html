@@ -20,19 +20,18 @@
 </header>
 
 <p>
-    <form>
+    <form id="search-field">
       <label for="search">Search:</label>
-      <input  class="box" class="textarea" type="search" id="search" name="search" placeholder="Search a US National Park" >
+      <input  class="box" class="textarea" type="search" id="search" name="search" placeholder="Search for a US National Park" >
       <button type="submit" id="submit"
       >Submit</button>
       <button type="submit" id="viewHistory"
-      class="button is-success"
-      >History</button>
+      class="button is-success">History</button>
+      <button type="submit" id="remove-history">Clear History</button>
       <div id="historyOutput"></div>
     </form>
-    </p>
-    <results class= results id="title">
-    </results>
+</p>
+<results class= results id="title"></results>
 <script src="./assets/script.js"></script>
 </body>
 </html>
