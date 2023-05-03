@@ -8,9 +8,15 @@ var removeHistory = document.querySelector('#remove-history')
 submitButton.addEventListener("click", function (e) {
   e.preventDefault();
   var userSearch = searchValue.value;
+  searchInputs = JSON.parse(localStorage.getItem('searchInputs'))
+  if (searchInputs === null) {
+    var searchInputs = []
+  }
+  searchInputs.push(userSearch)
+  localStorage.setItem('searchInputs',JSON.stringify(searchInputs))
+  localStorage.setItem('searchInput',JSON.stringify(userSearch))
   createSearchHistory(userSearch)
   fetchAPI(userSearch)
-
   //clear button
   var clearBtnEl = document.createElement('button')
   clearBtnEl.setAttribute('style','background-color: rgb(24, 19, 163); color: white; margin-left: 2rem; height: 30px; width: 80px; border-radius: 25px;')
@@ -35,6 +41,7 @@ submitButton.addEventListener("click", function (e) {
 removeHistory.addEventListener('click', function (e) {
   e.preventDefault();
   var userSearchDivEl = document.querySelector('#search-history-div');
+  localStorage.removeItem('searchInputs')
   userSearchDivEl.remove();
 })
 
@@ -200,15 +207,13 @@ function createSearchHistory (userSearch) {
   var userSearchDivEl = document.querySelector('#search-history-div')
 
   if (!document.querySelector('#search-history-div')) {
-    console.log('true')
     var userSearchDivEl = document.createElement('div')
     userSearchDivEl.setAttribute('id','search-history-div')
     userSearchDivEl.setAttribute('style','display: flex')
-  } else {console.log('false')}
-
-  
+  } 
+  //creates div for search inputs
   var userSearchEl = document.createElement('div')
-  userSearchEl.setAttribute('style','background-color:#48c78e; color: white; margin-left: 2rem; height: 30px; width: auto; border-radius: 4px; padding-left: 10px; padding-right: 10px; margin-top: 20px;')
+  userSearchEl.setAttribute('style','color:#00236F; margin-left: 2rem; height: 30px; width: auto; border-radius: 4px; padding-left: 10px; padding-right: 10px; margin-top: 20px;')
   userSearchEl.textContent = userSearch
   if (!document.querySelector('#search-history-div')) {
     historyOutput.appendChild(userSearchDivEl)
@@ -217,5 +222,24 @@ function createSearchHistory (userSearch) {
   
 }
 
+renderSearchHistory()
 function renderSearchHistory () {
+  var searchInputs = JSON.parse(localStorage.getItem('searchInputs'))
+
+  for (var i=0;i<searchInputs.length;i++) {
+    if (!document.querySelector('#search-history-div')) {
+      var userSearchDivEl = document.createElement('div')
+      userSearchDivEl.setAttribute('id','search-history-div')
+      userSearchDivEl.setAttribute('style','display: flex')
+    }
+
+    var userSearchEl = document.createElement('div')
+    userSearchEl.setAttribute('style','color: #00236F; margin-left: 2rem; height: 30px; width: auto; border-radius: 4px; padding-left: 10px; padding-right: 10px; margin-top: 20px;')
+    userSearchEl.textContent = searchInputs[i]
+    if (!document.querySelector('#search-history-div')) {
+      historyOutput.appendChild(userSearchDivEl)
+    }
+    userSearchDivEl.appendChild(userSearchEl)
+  }
+  console.log(searchInputs)
 }
