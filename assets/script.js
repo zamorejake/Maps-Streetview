@@ -91,6 +91,7 @@ function renderParkData (d) {
   var parkDivEl = document.createElement('div')
   parkDivEl.setAttribute('style','display: flex; justify-content: center;')
   var parkContainerEl = document.createElement('div')
+  parkContainerEl.setAttribute('id','park-container')
   parkContainerEl.setAttribute('style','display: flex; flex-wrap: wrap; flex-direction: column; align-items: center; justify-content: center; width: 80%;')
   
 
@@ -187,9 +188,11 @@ function fetchAPI (userSearch) {
     var wikiContainerEl = document.querySelector('#wiki-container')
     var articleDivEl = document.querySelector('#article-container')
     var clearBtnEl = document.querySelector('#clear')
+    var parkContainerEl = document.querySelector('#park-container')
     wikiContainerEl.remove();
     articleDivEl.remove();
     clearBtnEl.remove();
+    parkContainerEl.remove();
+
   })
 }
-//<p>Click <a href="mailto:amfrazier01@gmail.com">here</a> to reach me directly</p>
