@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="./assets/style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./assets/style.css"></script>
-    <title>Document</title>
+    <!-- <script src="./assets/style.css"></script> -->
+    <title>Parks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
+
+
 <body>
-    <script src="./assets/script.js"></script>
+<header class="title">
+    <h1 style="font-size: 50px;">US National Parks Directory</h1>
+
+    <nav>
+    </nav>
+</header>
+
+<p>
+    <form id="search-field">
+      <label for="search">Search:</label>
+      <input  class="box" class="textarea" type="search" id="search" name="search" placeholder="Search for a US National Park" >
+      <button type="submit" id="submit"
+      >Submit</button>
+      <button type="submit" id="remove-history">Clear History</button>
+      <div id="historyOutput"></div>
+    </form>
+</p>
+<results class= results id="title"></results>
+<script src="./assets/script.js"></script>
 </body>
 </html>
