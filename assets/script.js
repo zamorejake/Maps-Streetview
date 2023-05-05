@@ -241,5 +241,4 @@ function renderSearchHistory () {
     }
     userSearchDivEl.appendChild(userSearchEl)
   }
-  console.log(searchInputs)
 }
